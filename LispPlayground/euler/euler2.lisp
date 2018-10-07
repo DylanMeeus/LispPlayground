@@ -1,13 +1,13 @@
 (defvar *sum* 0)
 
 (defun fib(a b)
+  (let ((next_fib (+ a b)))
   (unless (> b 4000000)
-    (when (= (mod (+ a b) 2) 0)
-      (setf *sum* (+ *sum* (+ a b))
-            ))
-    (fib b (+ a b))
+    (when (= (mod next_fib 2) 0)
+      (setf *sum* (+ *sum* next_fib)))
+    (fib b next_fib)
     )
-  )
+  ))
 
 (defun solve()
   ;; reset sum variable when loading script
