@@ -4,7 +4,7 @@
 
 (defparameter *location* 'living-room)
 
-(defparameter *nodes* '((living-room (you are in the living-room.
+(defparameter *wizard-nodes* '((living-room (you are in the living-room.
                                         A wizard is snoring loudly on the couch.))
                         (garden (you are in a beautiful garden. 
                                      There is a well in front of you.))
@@ -13,7 +13,7 @@
                         ))
 
 
-(defparameter *edges* '((living-room (garden west door)
+(defparameter *wizard-edges* '((living-room (garden west door)
                                      (attic upstairs ladder)
                                      )
                         (garden (living-room east door))
@@ -33,14 +33,14 @@
 ; FUNCTIONS
 
 
-(defun describe-location (location nodes)
-  (cadr (assoc location nodes)))
+(defun describe-location (location wizard-nodes)
+  (cadr (assoc location wizard-nodes)))
 
 (defun describe-path (edge)
   `(there is a, (caddr edge) going, (cadr edge) from here.))
 
-(defun describe-paths (location edges)
-  (apply #'append (mapcar #'describe-path (cdr (assoc location edges)))))
+(defun describe-paths (location wizard-edges)
+  (apply #'append (mapcar #'describe-path (cdr (assoc location wizard-edges)))))
 
 
 (defun objects-at (loc objs obj-locs)
@@ -54,13 +54,13 @@
     (apply #'append (mapcar #'describe-obj (objects-at loc objs obj-loc)))))
 
 (defun look()
-  (append (describe-location *location* *nodes*)
-          (describe-paths *location* *edges*)
+  (append (describe-location *location* *wizard-nodes*)
+          (describe-paths *location* *wizard-edges*)
           (describe-objects *location* *objects* *object-locations*)))
 
 (defun walk(direction)
   (let ((next (find direction
-                    (cdr (assoc *location* *edges*))
+                    (cdr (assoc *location* *wizard-edges*))
                     :key #'cadr)))
     (if next
       (progn (setf *location* (car next))
