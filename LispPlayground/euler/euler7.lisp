@@ -21,3 +21,5 @@
         (find-10001-prime (+ 2 possibility) (1+ found))
         (find-10001-prime (+ 2 possibility) found)
         ))))
+
+(find-10001-prime 3 2)
