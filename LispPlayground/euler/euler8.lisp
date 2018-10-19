@@ -21,7 +21,10 @@
 (defun solve ()
        (let* ((slices '())
              (string-value (write-to-string *number*)))
+         ; create the 13-digit slices
          (loop for i from 0 to (- (length string-value) 13) do
                (setf slices (append slices (list(create-slices string-value i)))))
-         (print (length slices))
+         ; reduce each slice to the value
+         (reduce #'max 
+                 (mapcar #'string-reducer slices (make-list (length slices) :initial-element 1))
          ))
