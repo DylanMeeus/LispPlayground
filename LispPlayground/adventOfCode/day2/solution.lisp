@@ -4,14 +4,19 @@
 (defparameter *filename* "data.txt")
 
 
-(defun find-delta(numbers)
-  'nil
-  )
+; count the sum of the max->min delta
+(defun checksum-delta(sum head tail)
+    (if (eq '() head)
+    sum
+    (progn
+      (princ head)
+      (checksum-delta (+ sum (- (reduce #'max head) (reduce #'min head))) (car tail) (cdr tail)))
+  ))
 
 (defun solve()
   (let* ((data (get-file *filename*))
          (string-data (mapcar (lambda (x) (split-sequence:SPLIT-SEQUENCE #\Tab x)) data))
          (number-data (mapcar (lambda (x) (mapcar (lambda (z) (ignore-errors (parse-integer z))) x)) string-data))
          )
-    number-data))
+    (checksum-delta 0 (car number-data) (cdr number-data))))
 
