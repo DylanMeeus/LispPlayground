@@ -6,11 +6,9 @@
 
 ; count the sum of the max->min delta
 (defun checksum-delta(sum head tail)
-    (if (eq '() head)
+    (if (or (eq '() head) (equal '(nil) head))
     sum
-    (progn
-      (princ head)
-      (checksum-delta (+ sum (- (reduce #'max head) (reduce #'min head))) (car tail) (cdr tail)))
+    (checksum-delta (+ sum (- (reduce #'max head) (reduce #'min head))) (car tail) (cdr tail))
   ))
 
 (defun solve()
