@@ -9,4 +9,5 @@
 ; run solve and just read the first ten numbers
 (defun solve()
   (let ((num (mapcar (lambda (x) (parse-integer x)) (get-file))))
-    (reduce #'+ num)))
+    (subseq (write-to-string(reduce #'+ num)) 0 10)
+    ))
