@@ -28,3 +28,15 @@
 (defun add-cds()
   (loop (add-record (prompt-for-cd))
         (if (not (y-or-n-p "Another?")) (return))))
+
+(defun save-db (filename)
+  (with-open-file (out filename
+                       :direction :output
+                       :if-exists :supersede)
+    (with-standard-io-syntax
+      (print *db* out))))
+
+(defun load-db (filename)
+  (with-open-file (in filename)
+    (with-standard-io-syntax
+      (setf *db* (read in)))))
